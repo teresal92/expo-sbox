@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
+import { Color } from '../screens/Home';
 
-const ColorPalettePreview = ({ colors }) => {
+type ColorPalettePreviewProp = {
+  colors: Array<Color>;
+};
+
+const ColorPalettePreview: React.FC<ColorPalettePreviewProp> = ({ colors }) => {
   return (
     <View style={styles.container}>
       <FlatList
