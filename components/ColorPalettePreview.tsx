@@ -7,7 +7,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const ColorPalettePreview = ({ item, onPress }) => {
+type ColorPalette = {
+  id: string;
+  paletteName: string;
+  colors: { colorName: string; hexCode: string }[];
+};
+
+type ColorPalettePreviewProps = {
+  item: ColorPalette;
+  onPress: () => void;
+};
+
+const ColorPalettePreview: React.FC<ColorPalettePreviewProps> = ({
+  item,
+  onPress,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Text style={styles.heading}>{item.paletteName}</Text>
