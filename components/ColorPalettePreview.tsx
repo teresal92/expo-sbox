@@ -1,37 +1,50 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
-import { Color } from '../screens/Home';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
-type ColorPalettePreviewProp = {
-  colors: Array<Color>;
-};
-
-const ColorPalettePreview: React.FC<ColorPalettePreviewProp> = ({ colors }) => {
+const ColorPalettePreview = ({ item, onPress }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress}>
+      <Text style={styles.heading}>{item.paletteName}</Text>
       <FlatList
-        horizontal
-        data={colors.slice(0, 5)}
+        style={styles.list}
+        data={item.colors.slice(0, 5)}
         keyExtractor={(item) => item.colorName}
         renderItem={({ item }) => {
-          const backgroundStyle = {
-            backgroundColor: item.hexCode,
-          };
-          return <View style={[styles.box, backgroundStyle]}></View>;
+          return (
+            <View
+              style={[styles.box, { backgroundColor: item.hexCode }]}
+            ></View>
+          );
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
+  heading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  list: {
+    flexDirection: 'row',
+    marginBottom: 30,
   },
   box: {
-    width: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    elevation: 2,
     height: 40,
-    backgroundColor: 'black',
+    width: 40,
     marginRight: 10,
   },
 });

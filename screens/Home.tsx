@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import ColorPalettePreview from '../components/ColorPalettePreview';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type Color = {
   colorName: string;
@@ -49,7 +44,7 @@ const FRONTEND_MASTERS: Array<Color> = [
   { colorName: 'Orange', hexCode: '#e66225' },
 ];
 
-type ColorPalette = {
+export type ColorPalette = {
   paletteName: string;
   colors: Array<Color>;
 };
@@ -69,39 +64,32 @@ const COLOR_PALETTES: Array<ColorPalette> = [
   },
 ];
 
-// TODO: typecheck navigate: https://reactnavigation.org/docs/typescript/#type-checking-the-navigator
-const Home = ({ navigation: { navigate } }) => {
+const Home = ({ navigation }) => {
   return (
     <FlatList
+      style={styles.list}
       data={COLOR_PALETTES}
       keyExtractor={(item) => item.paletteName}
       renderItem={({ item }) => (
-        <View style={styles.container}>
-          <TouchableOpacity
-            onPress={() => {
-              /* Navigate to route with colors params */
-              navigate('ColorPalette', {
-                item,
-              });
-            }}
-          >
-            <Text style={styles.textStyle}>{item.paletteName}</Text>
-          </TouchableOpacity>
-          <ColorPalettePreview colors={item.colors} />
-        </View>
+        <ColorPalettePreview
+          item={item}
+          onPress={() => {
+            navigation.push('ColorPalette', {
+              paletteName: item.paletteName,
+              colors: item.colors,
+            });
+          }}
+        />
       )}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
-    marginLeft: 10,
-  },
-  textStyle: {
-    fontWeight: 'bold',
-    fontSize: 18,
+  list: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: 'white',
   },
 });
 
